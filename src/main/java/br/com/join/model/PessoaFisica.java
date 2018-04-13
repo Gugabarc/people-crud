@@ -23,8 +23,8 @@ public class PessoaFisica extends Pessoa implements Serializable {
 	@OneToMany
 	@JoinTable(
 		      name="pessoa_dependente",
-		      joinColumns={ @JoinColumn(name="pessoa_id", referencedColumnName="id") },
-		      inverseJoinColumns={ @JoinColumn(name="dependente_id", referencedColumnName="id") }
+		      joinColumns={ @JoinColumn(name="id_pessoa", referencedColumnName="id") },
+		      inverseJoinColumns={ @JoinColumn(name="id_dependente", referencedColumnName="id") }
 		  )
 	private Set<Dependente> dependentes = new HashSet<Dependente>();
 

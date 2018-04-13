@@ -44,7 +44,8 @@ public class ReportServlet extends HttpServlet {
 	}
 
 	private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-		try {
+		try (Connection connection = new ConnectionFactory().getConnection();
+				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()){
 			log.info("Generating report...");
 			
 			Instant processingInstant = Instant.now();
@@ -55,21 +56,18 @@ public class ReportServlet extends HttpServlet {
 			JasperCompileManager.compileReportToFile(context.getRealPath(SUBREPORT_REPORT_FILE));
 
 			Map<String, Object> parametros = new HashMap<String, Object>();
-			Connection connection = new ConnectionFactory().getConnection();
 
-			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			byteArrayOutputStream.write(JasperRunManager.runReportToPdf(context.getRealPath(COMPILED_FILE), parametros, connection));
 
-			baos.write(JasperRunManager.runReportToPdf(context.getRealPath(COMPILED_FILE), parametros, connection));
-
-			baos.flush();
-			baos.close();
+			byteArrayOutputStream.flush();
+			byteArrayOutputStream.close();
 			connection.close();
 
 			response.reset();
 			response.setHeader("Content-Disposition", "attachment; filename=pessoasReport.pdf");
 			response.setContentType("application/pdf");
 
-			response.getOutputStream().write(baos.toByteArray());
+			response.getOutputStream().write(byteArrayOutputStream.toByteArray());
 			response.getOutputStream().flush();
 			
 			long durationInMs = Duration.between(processingInstant, Instant.now()).toMillis();
