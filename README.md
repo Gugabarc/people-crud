@@ -50,6 +50,8 @@ Após definido o script SQL de setup do banco, e realizadas adaptações na inte
 Devido principalmente ao tempo disponível, ao prazo fornecido, e a ausência de regras de negócio, ainda que possível validar alguns comportamentos da aplicação, não foram acrescentados testes unitários. Como o uso de JUnit, AssertJ, Mockito, PowerMock e outros frameworks que auxiliam o desenvolvimento de testes, são indispensáveis em um projeto com um mínimo de qualidade, tenho disponível um sistema simples desenvolvido em 2016 para outro processo seletivo, onde algumas destas tecnologias foram utilizadas. O que faria de diferente na parte de testes deste projeto seria a inclusão de DataPoints, com o intuito de definir um input de dados a serem validados e reduzir o tamanho do código. Também incluiria o framework AssertJ para melhorar a legibilidade. Link do projeto: https://github.com/Gugabarc/theater-tickets
 
 ##Itens futuros
+- Incluir data de nascimento nas informações do dependente que são exibidas dentro do cadastro de Pessoa Física
+- Agrupar as pessoas por tipo (PJ/PF) no relatório, ou dividir em dois relatórios (um para PJ e outro para PF)
 - Mover usuário e senha do banco para um arquivo de properties, e colocá-lo fora da aplicação, assim evitando que o desenvolvedor tenha acesso a dados de produção
 - Acrescentar Spring Data e desacoplar as DAOs dos EJBs, e já refatorando/avaliando o código gerado pelo JBoss Forge
 - Acrescentar mais logs, pois até o momento foi adicionado apenas na geração de relatórios
