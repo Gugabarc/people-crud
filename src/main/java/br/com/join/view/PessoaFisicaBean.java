@@ -19,6 +19,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+import javax.persistence.Transient;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -28,7 +29,9 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.com.join.dao.PessoaDAO;
 import br.com.join.model.BrazilianState;
+import br.com.join.model.Pessoa;
 import br.com.join.model.PessoaFisica;
 import br.com.join.report.ReportServlet;
 import lombok.extern.slf4j.Slf4j;
@@ -50,6 +53,10 @@ import lombok.extern.slf4j.Slf4j;
 public class PessoaFisicaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	@Transient
+	private transient PessoaDAO pessoaDAO;
 
 	/*
 	 * Support creating and retrieving PessoaFisica entities
@@ -102,13 +109,12 @@ public class PessoaFisicaBean implements Serializable {
 		if (this.id == null) {
 			this.pessoaFisica = this.example;
 		} else {
-			this.pessoaFisica = findById(getId());
+			this.pessoaFisica = (PessoaFisica) findById(getId());
 		}
 	}
 
-	public PessoaFisica findById(Long id) {
-
-		return this.entityManager.find(PessoaFisica.class, id);
+	public Pessoa findById(Long id) {
+		return pessoaDAO.findById(id);
 	}
 
 	/*
@@ -120,10 +126,10 @@ public class PessoaFisicaBean implements Serializable {
 
 		try {
 			if (this.id == null) {
-				this.entityManager.persist(this.pessoaFisica);
+				pessoaDAO.update(this.pessoaFisica);
 				return "search?faces-redirect=true";
 			} else {
-				this.entityManager.merge(this.pessoaFisica);
+				pessoaDAO.update(this.pessoaFisica);
 				return "view?faces-redirect=true&id="
 						+ this.pessoaFisica.getId();
 			}
@@ -138,14 +144,10 @@ public class PessoaFisicaBean implements Serializable {
 		this.conversation.end();
 
 		try {
-			PessoaFisica deletableEntity = findById(getId());
-
-			this.entityManager.remove(deletableEntity);
-			this.entityManager.flush();
+			pessoaDAO.delete(pessoaFisica);
 			return "search?faces-redirect=true";
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(e.getMessage()));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
 			return null;
 		}
 	}
@@ -250,12 +252,7 @@ public class PessoaFisicaBean implements Serializable {
 	 */
 
 	public List<PessoaFisica> getAll() {
-
-		CriteriaQuery<PessoaFisica> criteria = this.entityManager
-				.getCriteriaBuilder().createQuery(PessoaFisica.class);
-		return this.entityManager.createQuery(
-				criteria.select(criteria.from(PessoaFisica.class)))
-				.getResultList();
+		return pessoaDAO.getAllPessoaFisica();
 	}
 
 	@Resource

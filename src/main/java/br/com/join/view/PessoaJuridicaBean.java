@@ -19,6 +19,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+import javax.persistence.Transient;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -31,7 +32,9 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.join.model.PessoaJuridica;
 import br.com.join.report.ReportServlet;
 import lombok.extern.slf4j.Slf4j;
+import br.com.join.dao.PessoaDAO;
 import br.com.join.model.BrazilianState;
+import br.com.join.model.Pessoa;
 
 /**
  * Backing bean for PessoaJuridica entities.
@@ -50,6 +53,10 @@ import br.com.join.model.BrazilianState;
 public class PessoaJuridicaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	@Transient
+	private transient PessoaDAO pessoaDAO;
 
 	/*
 	 * Support creating and retrieving PessoaJuridica entities
@@ -102,13 +109,12 @@ public class PessoaJuridicaBean implements Serializable {
 		if (this.id == null) {
 			this.pessoaJuridica = this.example;
 		} else {
-			this.pessoaJuridica = findById(getId());
+			this.pessoaJuridica = (PessoaJuridica) findById(getId());
 		}
 	}
 
-	public PessoaJuridica findById(Long id) {
-
-		return this.entityManager.find(PessoaJuridica.class, id);
+	public Pessoa findById(Long id) {
+		return pessoaDAO.findById(id);
 	}
 
 	/*
@@ -120,10 +126,10 @@ public class PessoaJuridicaBean implements Serializable {
 
 		try {
 			if (this.id == null) {
-				this.entityManager.persist(this.pessoaJuridica);
+				pessoaDAO.update(this.pessoaJuridica);
 				return "search?faces-redirect=true";
 			} else {
-				this.entityManager.merge(this.pessoaJuridica);
+				pessoaDAO.update(this.pessoaJuridica);
 				return "view?faces-redirect=true&id="
 						+ this.pessoaJuridica.getId();
 			}
@@ -138,10 +144,7 @@ public class PessoaJuridicaBean implements Serializable {
 		this.conversation.end();
 
 		try {
-			PessoaJuridica deletableEntity = findById(getId());
-
-			this.entityManager.remove(deletableEntity);
-			this.entityManager.flush();
+			pessoaDAO.delete(pessoaJuridica);
 			return "search?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
@@ -250,12 +253,7 @@ public class PessoaJuridicaBean implements Serializable {
 	 */
 
 	public List<PessoaJuridica> getAll() {
-
-		CriteriaQuery<PessoaJuridica> criteria = this.entityManager
-				.getCriteriaBuilder().createQuery(PessoaJuridica.class);
-		return this.entityManager.createQuery(
-				criteria.select(criteria.from(PessoaJuridica.class)))
-				.getResultList();
+		return pessoaDAO.getAllPessoaJuridica();
 	}
 
 	@Resource
