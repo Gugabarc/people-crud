@@ -12,6 +12,9 @@
 *.tar.gz
 *.rar
 
+#Compiled jrxml
+*.jasper
+
 /.settings
 .project
 .tern-project

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>#{empty pageTitle ? 'Page Title' : pageTitle}</title>
+	<link rel="icon" href='#{resource["favicon.ico"]}' />
+	<h:outputStylesheet name="bootstrap.css" />
+	<h:outputStylesheet name="forge-style.css" />
+	<h:outputStylesheet name="people-crud.css" />
+</h:head>
+
+<h:body>
+	<ui:debug rendered="#{facesContext.application.projectStage == 'Development'}" />
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<h:link id="brandLink" outcome="/index.xhtml" styleClass="brand">
+                    Cadastro de PF/PJ
+                    <h:outputText value=",  #{request.userPrincipal.name}" rendered="#{request.userPrincipal !=null} "/>
+				</h:link>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li><a href="#">Portal</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container forgecontainer">
+		<div id="navigation">
+			<h:link id="homeLink" outcome="/index.xhtml">
+				<h:graphicImage value='#{resource["logo.jpg"]}' alt="logo" border="0" styleClass="logo"/>	
+			</h:link>
+			<ul>
+				<li>
+					<h:link outcome="/dependente/search" value="Dependente"/>
+				</li>
+				<li>
+					<h:link outcome="/pessoaFisica/search" value="Pessoa Fisica"/>
+				</li>
+				<li>
+					<h:link outcome="/pessoaJuridica/search" value="Pessoa Juridica"/>
+				</li>
+			</ul>
+		</div>
+
+		<div id="content">
+			<h1>
+				<ui:insert name="header" />
+			</h1>
+			<h2>
+				<ui:insert name="subheader" />
+			</h2>
+
+			<ui:insert name="main" />
+		</div>
+	</div>
+
+	<footer>
+		<div id="footer-wrapper">
+	    	<p>Fornecido por <a href="http://jboss.org/forge">Forge</a></p>
+	    </div>
+	</footer>
+
+</h:body>
+</html>

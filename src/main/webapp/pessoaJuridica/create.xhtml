@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value='#{pessoaJuridicaBean.id}'/>
+		<f:event type="preRenderView" listener='#{pessoaJuridicaBean.retrieve}'/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="Nova Pessoa Jurídica"/>
+
+	<ui:define name="header">
+		Pessoa Jurídica
+	</ui:define>
+
+	<ui:define name="subheader">
+		<c:choose>
+			<c:when test='#{!empty pessoaJuridicaBean.id}'>
+				Editar
+			</c:when>
+			<c:otherwise>
+				Criar
+			</c:otherwise>
+		</c:choose>
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:form id="create">
+			<h:messages globalOnly="true" styleClass="error"/>
+
+			<h:panelGrid columnClasses="label,component,required" columns="3">
+				<h:outputLabel for="pessoaJuridicaBeanPessoaJuridicaName" value="Nome:"/>
+				<h:panelGroup>
+					<h:inputText id="pessoaJuridicaBeanPessoaJuridicaName" required="true" value="#{pessoaJuridicaBean.pessoaJuridica.name}"/>
+					<h:message for="pessoaJuridicaBeanPessoaJuridicaName" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+				<h:outputLabel for="pessoaJuridicaBeanPessoaJuridicaFoundationDate" value="Data de Fundação:"/>
+				<h:panelGroup>
+					<h:inputText id="pessoaJuridicaBeanPessoaJuridicaFoundationDate" value="#{pessoaJuridicaBean.pessoaJuridica.foundationDate}">
+						<f:convertDateTime type="date"/>
+					</h:inputText>
+					<h:message for="pessoaJuridicaBeanPessoaJuridicaFoundationDate" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="pessoaJuridicaBeanPessoaJuridicaUf" value="Estado:"/>
+				<h:panelGroup>
+					<h:selectOneMenu id="pessoaJuridicaBeanPessoaJuridicaUf" required="true" value="#{pessoaJuridicaBean.pessoaJuridica.uf}">
+						<f:selectItem itemValue="AC"/>
+						<f:selectItem itemValue="AL"/>
+						<f:selectItem itemValue="AP"/>
+						<f:selectItem itemValue="AM"/>
+						<f:selectItem itemValue="BA"/>
+						<f:selectItem itemValue="CE"/>
+						<f:selectItem itemValue="DF"/>
+						<f:selectItem itemValue="ES"/>
+						<f:selectItem itemValue="GO"/>
+						<f:selectItem itemValue="MA"/>
+						<f:selectItem itemValue="MT"/>
+						<f:selectItem itemValue="MS"/>
+						<f:selectItem itemValue="MG"/>
+						<f:selectItem itemValue="PA"/>
+						<f:selectItem itemValue="PB"/>
+						<f:selectItem itemValue="PR"/>
+						<f:selectItem itemValue="PE"/>
+						<f:selectItem itemValue="PI"/>
+						<f:selectItem itemValue="RJ"/>
+						<f:selectItem itemValue="RN"/>
+						<f:selectItem itemValue="RS"/>
+						<f:selectItem itemValue="RO"/>
+						<f:selectItem itemValue="RR"/>
+						<f:selectItem itemValue="SC"/>
+						<f:selectItem itemValue="SP"/>
+						<f:selectItem itemValue="SE"/>
+						<f:selectItem itemValue="TO"/>
+					</h:selectOneMenu>
+					<h:message for="pessoaJuridicaBeanPessoaJuridicaUf" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+				<h:outputLabel for="pessoaJuridicaBeanPessoaJuridicaCity" value="Cidade:"/>
+				<h:panelGroup>
+					<h:inputText id="pessoaJuridicaBeanPessoaJuridicaCity" value="#{pessoaJuridicaBean.pessoaJuridica.city}"/>
+					<h:message for="pessoaJuridicaBeanPessoaJuridicaCity" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+			</h:panelGrid>
+
+			<div class="buttons">
+				<h:commandLink value="Save" action='#{pessoaJuridicaBean.update}' styleClass="btn btn-primary"/>
+				<c:choose>
+					<c:when test='#{!empty pessoaJuridicaBean.id}'>
+						<h:link value="Cancel" outcome="view" styleClass="btn btn-primary">
+							<f:param name="id" value='#{pessoaJuridicaBean.id}'/>
+						</h:link>
+						<h:commandLink value="Delete" action='#{pessoaJuridicaBean.delete}' styleClass="btn btn-primary"/>
+					</c:when>
+					<c:otherwise>
+						<h:link value="Cancel" outcome="search" styleClass="btn btn-primary"/>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

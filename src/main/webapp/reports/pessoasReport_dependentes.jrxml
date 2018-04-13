@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pessoasReport_dependentes" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e9139f0a-2769-4859-b193-ffcde64c4c34">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[cGVzc29hX2RlcGVuZGVudGUgLDE1LDE1LDQ0YTdhZDNjLTAyOTEtNGUwOC04OTA3LTVmMTgzYWJk
+OTRjZTtkZXBlbmRlbnRlICwxOTQsMTUsNjI2MmQ2NTUtNDBjMC00NjVjLWIxZDAtNWNkYzZkOTM0
+NmUwOw==
+]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="PESSOA_ID" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT name,
+	to_char(birth_date, 'dd/mm/yyyy') as birth_date
+FROM pessoa_dependente pd
+	inner join dependente d on d.id = pd.dependente_id
+WHERE 
+	 pd.pessoa_id = $P{PESSOA_ID}]]>
+	</queryString>
+	<field name="name" class="java.lang.String"/>
+	<field name="birth_date" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="57" y="0" width="144" height="30" uuid="dc8a8307-6095-4970-9f88-f05ba860a4db">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1e1e155c-0cf0-42f2-a901-0b4a25f0266f"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dependente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="0" width="100" height="30" uuid="02bbf6f3-554c-48b6-9733-fffe268ebad7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a98575aa-258e-4678-9dfd-256504a3a758"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data de Nasc.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="57" y="0" width="144" height="30" uuid="b076fb63-34ca-48d5-b609-20cc5db4f22a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1e1e155c-0cf0-42f2-a901-0b4a25f0266f"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="201" y="0" width="100" height="30" uuid="58fd036d-dbed-47d3-a71b-ba7d1b638728">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a98575aa-258e-4678-9dfd-256504a3a758"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{birth_date}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="57" y="0" width="523" height="1" uuid="b563c944-a8ca-4f2e-ab17-50e02f9cb662"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
