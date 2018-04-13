@@ -50,7 +50,7 @@ Após definido o script SQL de setup do banco, e realizadas adaptações na inte
 Devido principalmente ao tempo disponível, ao curto prazo fornecido, e a ausência do acréscimo de regras de negócio, ainda que possível validar alguns comportamentos da aplicação, não foram acrescentados testes unitários. Como o uso de JUnit, AssertJ, Mockito, PowerMock e outros frameworks que auxiliam o desenvolvimento de testes, são indispensáveis em um projeto com um mínimo de qualidade, tenho disponível um sistema simples desenvolvido em 2016 para outro processo seletivo, onde algumas destas tecnologias foram utilizadas. O que faria de diferente na parte de testes deste projeto seria a inclusão de DataPoints, com o intuito de definir um input de dados a serem validados e reduzir o tamanho do código. Também incluiria o framework AssertJ para melhorar a legibilidade. Link do projeto: https://github.com/Gugabarc/theater-tickets
 
 ##Itens futuros
-FEITO! - Desacoplar DAOs e EJBs, criando um DAO único para Pessoa, e removendo código duplicado dos EJBs de PF e PJ
+- FEITO! - Desacoplar DAOs e EJBs, criando um DAO único para Pessoa, e removendo código duplicado dos EJBs de PF e PJ
 - Refatorar método de paginação dos EJBs para manter acesso a base apenas pela DAO
 - Refatorar EJBs para evitar duplicidade de código
 - Incluir data de nascimento nas informações do dependente que são exibidas dentro do cadastro de Pessoa Física
