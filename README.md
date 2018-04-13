@@ -2,7 +2,7 @@ Projeto realizado para processo seletivo em 2018.
 
 ##Problema:
 
-######Instruções:
+Instruções:
 Desenvolver uma aplicação web de cadastro de Pessoa, que pode ser física ou jurídica.
 Uma pessoa física pode ter um ou mais filhos. A aplicação deve salvar as informações no
 banco de dados.
@@ -37,6 +37,7 @@ Tecnologias necessárias:
 - JUnit
 - Mockito
 - JasperReport
+
 
 ##Solução Adotada
 
